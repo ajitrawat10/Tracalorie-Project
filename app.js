@@ -49,3 +49,53 @@ const StorageCtrl = (function(){
         if(id === item.id){
           items.splice(index, 1);
         }
+         });
+      localStorage.setItem('items', JSON.stringify(items));
+    },
+    clearItemsFromStorage: function(){
+      localStorage.removeItem('items');
+    }
+  }
+})();
+
+
+// Item Controller
+const ItemCtrl = (function(){
+  // Item Constructor
+  const Item = function(id, name, calories){
+    this.id = id;
+    this.name = name;
+    this.calories = calories;
+  }
+
+  // Data Structure / State
+  const data = {
+    // items: [
+    //   // {id: 0, name: 'Steak Dinner', calories: 1200},
+    //   // {id: 1, name: 'Cookie', calories: 400},
+    //   // {id: 2, name: 'Eggs', calories: 300}
+    // ],
+    items: StorageCtrl.getItemsFromStorage(),
+    currentItem: null,
+    totalCalories: 0
+  }
+
+  // Public methods
+  return {
+    getItems: function(){
+      return data.items;
+    },
+    addItem: function(name, calories){
+      let ID;
+      // Create ID
+      if(data.items.length > 0){
+        ID = data.items[data.items.length - 1].id + 1;
+      } else {
+        ID = 0;
+      }
+
+      // Calories to number
+      calories = parseInt(calories);
+
+      // Create new item
+      newItem = new Item(ID, name, calories);
