@@ -148,3 +148,53 @@ const ItemCtrl = (function(){
       data.currentItem = item;
     },
     getCurrentItem: function(){
+           return data.currentItem;
+    },
+    getTotalCalories: function(){
+      let total = 0;
+
+      // Loop through items and add cals
+      data.items.forEach(function(item){
+        total += item.calories;
+      });
+
+      // Set total cal in data structure
+      data.totalCalories = total;
+
+      // Return total
+      return data.totalCalories;
+    },
+    logData: function(){
+      return data;
+    }
+  }
+})();
+
+
+
+// UI Controller
+const UICtrl = (function(){
+  const UISelectors = {
+    itemList: '#item-list',
+    listItems: '#item-list li',
+    addBtn: '.add-btn',
+    updateBtn: '.update-btn',
+    deleteBtn: '.delete-btn',
+    backBtn: '.back-btn',
+    clearBtn: '.clear-btn',
+    itemNameInput: '#item-name',
+    itemCaloriesInput: '#item-calories',
+    totalCalories: '.total-calories'
+  }
+  
+  // Public methods
+  return {
+    populateItemList: function(items){
+      let html = '';
+
+      items.forEach(function(item){
+        html += `<li class="collection-item" id="item-${item.id}">
+        <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
