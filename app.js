@@ -99,3 +99,52 @@ const ItemCtrl = (function(){
 
       // Create new item
       newItem = new Item(ID, name, calories);
+           // Add to items array
+      data.items.push(newItem);
+
+      return newItem;
+    },
+    getItemById: function(id){
+      let found = null;
+      // Loop through items
+      data.items.forEach(function(item){
+        if(item.id === id){
+          found = item;
+        }
+      });
+      return found;
+    },
+    updateItem: function(name, calories){
+      // Calories to number
+      calories = parseInt(calories);
+
+      let found = null;
+
+      data.items.forEach(function(item){
+        if(item.id === data.currentItem.id){
+          item.name = name;
+          item.calories = calories;
+          found = item;
+        }
+      });
+      return found;
+    },
+    deleteItem: function(id){
+      // Get ids
+      const ids = data.items.map(function(item){
+        return item.id;
+      });
+
+      // Get index
+      const index = ids.indexOf(id);
+
+      // Remove item
+      data.items.splice(index, 1);
+    },
+    clearAllItems: function(){
+      data.items = [];
+    },
+    setCurrentItem: function(item){
+      data.currentItem = item;
+    },
+    getCurrentItem: function(){
